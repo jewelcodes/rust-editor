@@ -3,24 +3,25 @@ mod ui {
     pub mod terminal;
 }
 
-use ui::canvas::Canvas;
+use ui::canvas::{Canvas, BorderType};
 
 fn main() {
-    let mut canvas = Canvas::new(0, 0, 20, 15);
+    let mut canvas = Canvas::new(0, 0, 40, 21);
 
-    canvas.set_cell_content(4, 7, 'H');
-    canvas.set_cell_content(5, 7, 'e');
-    canvas.set_cell_content(6, 7, 'l');
-    canvas.set_cell_content(7, 7, 'l');
-    canvas.set_cell_content(8, 7, 'o');
+    canvas.set_cell_content(14, 10, 'H');
+    canvas.set_cell_content(15, 10, 'e');
+    canvas.set_cell_content(16, 10, 'l');
+    canvas.set_cell_content(17, 10, 'l');
+    canvas.set_cell_content(18, 10, 'o');
 
-    canvas.set_cell_content(10, 7, 'w');
-    canvas.set_cell_content(11, 7, 'o');
-    canvas.set_cell_content(12, 7, 'r');
-    canvas.set_cell_content(13, 7, 'l');
-    canvas.set_cell_content(14, 7, 'd');
-    canvas.set_cell_content(15, 7, '!');
+    canvas.set_cell_content(20, 10, 'w');
+    canvas.set_cell_content(21, 10, 'o');
+    canvas.set_cell_content(22, 10, 'r');
+    canvas.set_cell_content(23, 10, 'l');
+    canvas.set_cell_content(24, 10, 'd');
+    canvas.set_cell_content(25, 10, '!');
 
+    canvas.set_border(BorderType::Rounded);
     canvas.render();
 
     loop {}

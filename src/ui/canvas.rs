@@ -5,6 +5,56 @@ struct Cell {
     content: char
 }
 
+pub enum BorderType {
+    None,
+    Normal,
+    Rounded
+}
+
+struct BorderCharacters {
+    top: char,
+    right: char,
+    bottom: char,
+    left: char,
+    top_left: char,
+    top_right: char,
+    bottom_right: char,
+    bottom_left: char
+}
+
+const BORDER_NONE: BorderCharacters = BorderCharacters {
+    top: ' ',
+    bottom: ' ',
+    left: ' ',
+    right: ' ',
+    top_left: ' ',
+    top_right: ' ',
+    bottom_right: ' ',
+    bottom_left: ' '
+};
+
+const BORDER_NORMAL: BorderCharacters = BorderCharacters {
+    top: '─',
+    bottom: '─',
+    left: '│',
+    right: '│',
+    top_left: '┌',
+    top_right: '┐',
+    bottom_right: '┘',
+    bottom_left: '└'
+};
+
+const BORDER_ROUNDED: BorderCharacters = BorderCharacters {
+    top: '─',
+    bottom: '─',
+    left: '│',
+    right: '│',
+    top_left: '╭',
+    top_right: '╮',
+    bottom_right: '╯',
+    bottom_left: '╰'
+};
+
 pub struct Canvas {
     pub x: usize,
     pub y: usize,
@@ -21,7 +71,7 @@ impl Canvas {
             cells: Vec::new()
         };
 
-        for _ in 0..width*height {
+        for _ in 0..width * height {
             canvas.cells.push(Cell {
                 content: ' '
             });
@@ -36,6 +86,29 @@ impl Canvas {
 
     pub fn set_cell_content(&mut self, x: usize, y: usize, content: char) {
         self.cells[y * self.width + x].content = content;
+    }
+
+    pub fn set_border(&mut self, border_type: BorderType) {
+        let border = match border_type {
+            BorderType::Normal => &BORDER_NORMAL,
+            BorderType::Rounded => &BORDER_ROUNDED,
+            _ => &BORDER_NONE
+        };
+
+        self.set_cell_content(0, 0, border.top_left);
+        self.set_cell_content(self.width - 1, 0, border.top_right);
+        self.set_cell_content(self.width - 1, self.height - 1, border.bottom_right);
+        self.set_cell_content(0, self.height - 1, border.bottom_left);
+
+        for x in 1..self.width - 1 {
+            self.set_cell_content(x, 0, border.top);
+            self.set_cell_content(x, self.height - 1, border.bottom);
+        }
+
+        for y in 1..self.height - 1 {
+            self.set_cell_content(0, y, border.left);
+            self.set_cell_content(self.width - 1, y, border.right);
+        }
     }
 
     pub fn render(&self) {
