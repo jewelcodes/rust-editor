@@ -1,3 +1,5 @@
+use crate::ui::terminal;
+
 #[derive(Clone, Copy)]
 struct Cell {
     content: char
@@ -38,11 +40,13 @@ impl Canvas {
 
     pub fn render(&self) {
         for y in 0..self.height {
+            terminal::move_cursor(self.x, self.y + y);
+
             for x in 0..self.width {
                 print!("{}", self.get_cell_content(x, y));
             }
-
-            println!();
         }
+
+        terminal::flush_output();
     }
 }

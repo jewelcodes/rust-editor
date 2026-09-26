@@ -1,9 +1,12 @@
 mod ui {
     pub mod canvas;
+    pub mod terminal;
 }
 
+use ui::canvas::Canvas;
+
 fn main() {
-    let mut canvas = ui::canvas::Canvas::new(0, 0, 20, 15);
+    let mut canvas = Canvas::new(0, 0, 20, 15);
 
     canvas.set_cell_content(4, 7, 'H');
     canvas.set_cell_content(5, 7, 'e');
@@ -19,4 +22,6 @@ fn main() {
     canvas.set_cell_content(15, 7, '!');
 
     canvas.render();
+
+    loop {}
 }
